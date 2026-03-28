@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '@/convex/_generated/api'
 import { isConvexConfigured } from '@/components/ConvexClientProvider'
 import { approximateColorName } from '@/lib/colorUtils'
+import ReferenceSourceModal from '@/components/ReferenceSourceModal'
 
 function rgbToHex(r: number, g: number, b: number): string {
   const clamp = (n: number) => Math.max(0, Math.min(255, Math.round(n)))
@@ -63,6 +64,7 @@ export default function ArtworkWorkspace({
   const [tutorialsLoading, setTutorialsLoading] = useState(false)
   const [mixError, setMixError] = useState<string | null>(null)
   const [tutorialsError, setTutorialsError] = useState<string | null>(null)
+  const [sourceModalOpen, setSourceModalOpen] = useState(false)
 
   const getColorMix = useAction(api.ai.getColorMix)
   const getTutorials = useAction(api.tutorials.getTutorials)
@@ -237,10 +239,17 @@ export default function ArtworkWorkspace({
         onChange={handleFile}
       />
 
+      <ReferenceSourceModal
+        open={sourceModalOpen}
+        onClose={() => setSourceModalOpen(false)}
+        onChooseUpload={() => fileInputRef.current?.click()}
+        onInspirationPicked={(dataUrl) => onImageChange(dataUrl)}
+      />
+
       <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => setSourceModalOpen(true)}
           className="btn-gold min-h-[44px] px-5 text-sm transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
         >
           {imageUrl ? 'Replace image' : 'Upload image'}
@@ -272,7 +281,7 @@ export default function ArtworkWorkspace({
         ) : (
           <button
             type="button"
-            onClick={() => fileInputRef.current?.click()}
+            onClick={() => setSourceModalOpen(true)}
             className="
               absolute inset-0 flex flex-col items-center justify-center gap-4 p-8
               text-brown-500 hover:text-brown-700 transition-colors duration-300
@@ -297,8 +306,8 @@ export default function ArtworkWorkspace({
                 <line x1="12" y1="3" x2="12" y2="15" />
               </svg>
             </div>
-            <span className="font-serif text-lg text-brown-700">
-              Upload a reference image to begin
+            <span className="font-serif text-lg text-brown-700 text-center max-w-xs">
+              Add a reference — upload your own or get inspired
             </span>
           </button>
         )}

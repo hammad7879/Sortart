@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Crimson_Pro } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ArtistProfileProvider } from '@/components/ArtistProfileProvider'
 import { ConvexClientProvider } from '@/components/ConvexClientProvider'
 import './globals.css'
 
@@ -17,25 +18,11 @@ const crimsonPro = Crimson_Pro({
 })
 
 export const metadata: Metadata = {
-  title: 'ArtWise - Your Canvas Guided by AI',
+  title: 'SortArt — Your Canvas Guided by AI',
   description: 'A premium AI companion for artists. Get color analysis, mixing guides, and expert coaching for your artwork.',
-  generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/image%20copy.png',
+    apple: '/image%20copy.png',
   },
 }
 
@@ -55,10 +42,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfairDisplay.variable} ${crimsonPro.variable} font-sans antialiased`}>
-        <ConvexClientProvider>
-          {children}
-          <Analytics />
-        </ConvexClientProvider>
+        <ArtistProfileProvider>
+          <ConvexClientProvider>
+            {children}
+            <Analytics />
+          </ConvexClientProvider>
+        </ArtistProfileProvider>
       </body>
     </html>
   )

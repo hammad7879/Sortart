@@ -5,14 +5,18 @@ import { useRouter } from 'next/navigation'
 import Header from '@/components/Header'
 import Sidebar from '@/components/Sidebar'
 import ArtworkGallery from '@/components/ArtworkGallery'
+import ReferenceSourceModal from '@/components/ReferenceSourceModal'
+import { setStudioReferenceImage } from '@/lib/studioReferenceImage'
 
 export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [startModalOpen, setStartModalOpen] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
-  const handleStartNewArtwork = () => {
-    fileInputRef.current?.click()
+  const goToStudioWithImage = (dataUrl: string) => {
+    setStudioReferenceImage(dataUrl)
+    router.push('/studio')
   }
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,8 +26,7 @@ export default function HomePage() {
     const reader = new FileReader()
     reader.onload = (event) => {
       const base64 = event.target?.result as string
-      localStorage.setItem('artwise-image', base64)
-      router.push('/studio')
+      goToStudioWithImage(base64)
     }
     reader.readAsDataURL(file)
     e.target.value = ''
@@ -31,6 +34,13 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen relative z-10">
+      <ReferenceSourceModal
+        open={startModalOpen}
+        onClose={() => setStartModalOpen(false)}
+        onChooseUpload={() => fileInputRef.current?.click()}
+        onInspirationPicked={(dataUrl) => goToStudioWithImage(dataUrl)}
+      />
+
       <Header onMenuClick={() => setSidebarOpen(true)} />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -59,14 +69,15 @@ export default function HomePage() {
         "
         >
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-brown-900 leading-tight text-balance mb-6">
-            Your Canvas Guided by AI
+            SortArt — Your Canvas Guided by AI
           </h1>
           <p className="text-lg md:text-xl text-brown-500 leading-relaxed max-w-2xl mx-auto mb-10">
             Upload your artwork and let our AI companion help you perfect your palette,
             understand color theory, and master mixing techniques.
           </p>
           <button
-            onClick={handleStartNewArtwork}
+            type="button"
+            onClick={() => setStartModalOpen(true)}
             className="btn-gold text-lg px-8 py-4 w-full md:w-auto"
           >
             Start New Artwork

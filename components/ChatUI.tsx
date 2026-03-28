@@ -38,7 +38,7 @@ export default function ChatUI({ messages, onSendMessage, isLoading }: ChatUIPro
         <div className="flex items-center gap-2">
           <SparkleIcon className="w-5 h-5 text-gold" />
           <h2 className="font-serif text-lg font-semibold text-brown-900">
-            AI Art Coach
+            SortArt Coach
           </h2>
         </div>
       </div>

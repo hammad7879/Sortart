@@ -5,14 +5,18 @@ import { useRouter } from 'next/navigation'
 import Header from '@/components/Header'
 import Sidebar from '@/components/Sidebar'
 import ArtworkGallery from '@/components/ArtworkGallery'
+import ReferenceSourceModal from '@/components/ReferenceSourceModal'
+import { setStudioReferenceImage } from '@/lib/studioReferenceImage'
 
 export default function ArtworksPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [startModalOpen, setStartModalOpen] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
-  const goNew = () => {
-    fileInputRef.current?.click()
+  const goToStudioWithImage = (dataUrl: string) => {
+    setStudioReferenceImage(dataUrl)
+    router.push('/studio')
   }
 
   const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,8 +24,7 @@ export default function ArtworksPage() {
     if (!file) return
     const reader = new FileReader()
     reader.onload = () => {
-      localStorage.setItem('artwise-image', reader.result as string)
-      router.push('/studio')
+      goToStudioWithImage(reader.result as string)
     }
     reader.readAsDataURL(file)
     e.target.value = ''
@@ -29,6 +32,13 @@ export default function ArtworksPage() {
 
   return (
     <div className="min-h-screen relative z-10">
+      <ReferenceSourceModal
+        open={startModalOpen}
+        onClose={() => setStartModalOpen(false)}
+        onChooseUpload={() => fileInputRef.current?.click()}
+        onInspirationPicked={(dataUrl) => goToStudioWithImage(dataUrl)}
+      />
+
       <Header onMenuClick={() => setSidebarOpen(true)} />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -54,11 +64,15 @@ export default function ArtworksPage() {
                 My Artworks
               </h1>
               <p className="text-brown-500 mt-2 max-w-xl">
-                Pieces you saved from the studio appear first. Demo tiles are inspiration
-                only.
+                Tap any artwork to open it in the studio. Your saved pieces are listed first;
+                sample paintings below are there to try the tools.
               </p>
             </div>
-            <button type="button" onClick={goNew} className="btn-gold shrink-0 self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={() => setStartModalOpen(true)}
+              className="btn-gold shrink-0 self-start sm:self-auto"
+            >
               New artwork
             </button>
           </div>

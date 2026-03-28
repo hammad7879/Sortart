@@ -10,6 +10,11 @@ import ChatUI from '@/components/ChatUI'
 import { api } from '@/convex/_generated/api'
 import { isConvexConfigured } from '@/components/ConvexClientProvider'
 import { compressDataUrlForStorage } from '@/lib/imageForStorage'
+import {
+  clearStudioReferenceImage,
+  getStudioReferenceImage,
+  setStudioReferenceImage,
+} from '@/lib/studioReferenceImage'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -25,7 +30,7 @@ export default function StudioPage() {
     {
       role: 'assistant',
       content:
-        "Hello! I'm your AI Art Coach. Upload an artwork and ask me anything about colors, techniques, or composition.",
+        "Hello! I'm your SortArt coach. Upload an artwork and ask me anything about colors, techniques, or composition.",
     },
   ])
   const [isLoading, setIsLoading] = useState(false)
@@ -36,7 +41,7 @@ export default function StudioPage() {
   const createArtwork = useMutation(api.artworks.createArtwork)
 
   useEffect(() => {
-    const storedImage = localStorage.getItem('artwise-image')
+    const storedImage = getStudioReferenceImage()
     if (storedImage) {
       setImageUrl(storedImage)
     }
@@ -44,7 +49,7 @@ export default function StudioPage() {
 
   const persistImage = (dataUrl: string) => {
     setImageUrl(dataUrl)
-    localStorage.setItem('artwise-image', dataUrl)
+    setStudioReferenceImage(dataUrl)
   }
 
   const handleEndArtwork = async () => {
@@ -66,7 +71,7 @@ export default function StudioPage() {
           /* still leave studio if save fails */
         }
       }
-      localStorage.removeItem('artwise-image')
+      clearStudioReferenceImage()
       setImageUrl(null)
       router.push('/')
     } finally {

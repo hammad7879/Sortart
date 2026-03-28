@@ -1,12 +1,13 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'convex/react'
 import { useRouter } from 'next/navigation'
 import { api } from '@/convex/_generated/api'
 import { isConvexConfigured } from '@/components/ConvexClientProvider'
 import type { Doc } from '@/convex/_generated/dataModel'
 import { DEMO_ARTWORKS, formatArtworkDate } from '@/lib/artworkDemos'
+import { setStudioReferenceImage } from '@/lib/studioReferenceImage'
 
 interface ArtworkGalleryProps {
   title?: string
@@ -18,7 +19,7 @@ interface ArtworkGalleryProps {
 
 export default function ArtworkGallery({
   title = 'Recent Artworks',
-  description = 'End a session in the studio to save a piece here. Demo tiles below are examples only.',
+  description = 'Tap any piece to open it in the studio. Saved work appears first; sample paintings below are for trying the tools.',
   className = '',
   showSectionHeading = true,
 }: ArtworkGalleryProps) {
@@ -36,8 +37,8 @@ export default function ArtworkGallery({
     ]
   }, [savedRaw])
 
-  const openSavedInStudio = (referenceImage: string) => {
-    localStorage.setItem('artwise-image', referenceImage)
+  const openInStudio = (referenceImage: string) => {
+    setStudioReferenceImage(referenceImage)
     router.push('/studio')
   }
 
@@ -65,7 +66,7 @@ export default function ArtworkGallery({
               title={row.doc.title}
               date={formatArtworkDate(row.doc.createdAt)}
               referenceImage={row.doc.referenceImage}
-              onOpen={() => openSavedInStudio(row.doc.referenceImage)}
+              onOpen={() => openInStudio(row.doc.referenceImage)}
             />
           ) : (
             <ArtworkCard
@@ -74,6 +75,7 @@ export default function ArtworkGallery({
               title={row.demo.title}
               date={row.demo.date}
               referenceImage={row.demo.imageUrl}
+              onOpen={() => openInStudio(row.demo.imageUrl)}
             />
           )
         )}
@@ -100,6 +102,13 @@ export function ArtworkCard({
   onOpen,
 }: ArtworkCardProps) {
   const interactive = Boolean(onOpen && referenceImage)
+  const [imgError, setImgError] = useState(false)
+
+  useEffect(() => {
+    setImgError(false)
+  }, [referenceImage])
+
+  const showImage = Boolean(referenceImage) && !imgError
 
   return (
     <article
@@ -125,13 +134,14 @@ export function ArtworkCard({
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="aspect-[4/3] w-full relative bg-beige-dark">
-        {referenceImage ? (
+        {showImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={referenceImage}
             alt={title}
             className="absolute inset-0 w-full h-full object-cover"
             loading="lazy"
+            onError={() => setImgError(true)}
           />
         ) : (
           <div

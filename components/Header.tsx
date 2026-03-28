@@ -17,8 +17,9 @@ export default function Header({ onMenuClick }: HeaderProps) {
 
   return (
     <header
-      className="header-crushed-paper fixed top-0 left-0 right-0 h-16 bg-beige/95 backdrop-blur-sm border-b border-brown-100 z-40"
+      className="header-crushed-paper fixed top-0 left-0 right-0 h-16 border-b border-brown-100 z-40"
     >
+      <div className="header-photo-bg" aria-hidden />
       <div
         className="
           relative z-10 flex items-center justify-between h-full
@@ -27,17 +28,21 @@ export default function Header({ onMenuClick }: HeaderProps) {
           lg:pl-[calc(260px+2rem)] lg:pr-8
         "
       >
-        {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 group transition-opacity hover:opacity-90"
+          className="
+            shrink-0 rounded-full overflow-hidden ring-2 ring-brown-100 shadow-sm
+            transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-beige
+          "
           aria-label="SortArt home"
         >
-          <BrushIcon className="w-6 h-6 shrink-0 text-gold group-hover:text-brown-700 transition-colors" />
-          <span className="font-serif text-xl lg:text-2xl tracking-tight leading-none">
-            <span className="font-semibold text-brown-900">Sort</span>
-            <span className="font-bold text-gold">Art</span>
-          </span>
+          <img
+            src="/image%20copy.png"
+            alt="SortArt"
+            width={40}
+            height={40}
+            className="h-10 w-10 origin-center object-cover scale-[1.22]"
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -84,22 +89,5 @@ export default function Header({ onMenuClick }: HeaderProps) {
         </button>
       </div>
     </header>
-  )
-}
-
-function BrushIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M9.06 11.9l8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />
-      <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" />
-    </svg>
   )
 }

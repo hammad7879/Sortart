@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 
 const convexUrl =
   process.env.NEXT_PUBLIC_CONVEX_URL?.trim() ||
-  'https://artwise-convex-not-configured.invalid'
+  'https://sortart-convex-not-configured.invalid'
 
 const convex = new ConvexReactClient(convexUrl)
 

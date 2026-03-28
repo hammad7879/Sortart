@@ -2,6 +2,9 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { useArtistProfile } from '@/components/ArtistProfileProvider'
+import EditProfileModal from '@/components/EditProfileModal'
 
 interface SidebarProps {
   isOpen: boolean
@@ -21,6 +24,10 @@ const projects: Project[] = [
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname()
+  const { profile } = useArtistProfile()
+  const [editProfileOpen, setEditProfileOpen] = useState(false)
+
+  const avatarSrc = profile.profileImageDataUrl ?? '/image.png'
 
   const navLinks = [
     { href: '/', label: 'Home', icon: HomeIcon },
@@ -29,6 +36,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   return (
     <>
+      <EditProfileModal open={editProfileOpen} onClose={() => setEditProfileOpen(false)} />
+
       {/* Mobile overlay */}
       {isOpen && (
         <div 
@@ -62,18 +71,29 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden mb-3 ring-2 ring-gold/50 shadow-md bg-brown-100">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/image.png"
-                alt="Hammad Riyaz"
+                src={avatarSrc}
+                alt={profile.displayName}
                 className="w-full h-full object-cover"
               />
             </div>
             <h2 className="font-serif text-lg lg:text-xl font-semibold text-brown-900">
-              Hammad Riyaz
+              {profile.displayName}
             </h2>
-            <p className="text-sm text-muted">@hammad.riyaz</p>
+            <p className="text-sm text-muted">@{profile.username}</p>
             <p className="text-sm text-brown-500 mt-2 leading-relaxed">
               Capturing light one brushstroke at a time
             </p>
+            <button
+              type="button"
+              onClick={() => setEditProfileOpen(true)}
+              className="
+                mt-4 text-sm font-medium text-gold hover:text-brown-700
+                underline underline-offset-4 decoration-gold/50 hover:decoration-brown-500
+                transition-colors min-h-[44px] px-2
+              "
+            >
+              Edit profile
+            </button>
           </div>
 
           {/* Navigation */}

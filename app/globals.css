@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* ArtWise Warm Palette */
+  /* SortArt warm palette */
   --beige: #F5EFE0;
   --beige-dark: #EDE3CA;
   --brown-900: #2C1A0E;
@@ -66,7 +66,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   
-  /* Custom ArtWise Colors */
+  /* Custom SortArt palette extensions */
   --color-beige: var(--beige);
   --color-beige-dark: var(--beige-dark);
   --color-brown-900: var(--brown-900);
@@ -109,6 +109,26 @@
 }
 
 @layer components {
+  /*
+   * Header background: image copy 2.png fills the bar (cover), low intensity via cream wash on top.
+   * First background layer paints above the second (image underneath).
+   */
+  .header-photo-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(
+        rgba(245, 239, 224, 0.78),
+        rgba(245, 239, 224, 0.78)
+      ),
+      url('/image%20copy%202.png');
+    background-size: cover, cover;
+    background-position: center center, center center;
+    background-repeat: no-repeat, no-repeat;
+  }
+
   /* Crushed / fibrous paper overlay for header (SVG turbulence + multiply on cream) */
   .header-crushed-paper {
     @apply relative isolate overflow-hidden;
@@ -118,7 +138,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: 2;
     pointer-events: none;
     opacity: 0.42;
     mix-blend-mode: multiply;
@@ -130,7 +150,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: 2;
     pointer-events: none;
     opacity: 0.18;
     mix-blend-mode: soft-light;
