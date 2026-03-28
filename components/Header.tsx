@@ -16,15 +16,27 @@ export default function Header({ onMenuClick }: HeaderProps) {
   ]
 
   return (
-    <header 
-      className="fixed top-0 left-0 right-0 h-16 bg-beige/95 backdrop-blur-sm border-b border-brown-100 z-40"
+    <header
+      className="header-crushed-paper fixed top-0 left-0 right-0 h-16 bg-beige/95 backdrop-blur-sm border-b border-brown-100 z-40"
     >
-      <div className="flex items-center justify-between h-full px-4 lg:px-6">
+      <div
+        className="
+          relative z-10 flex items-center justify-between h-full
+          px-4
+          md:pl-[calc(200px+1.5rem)] md:pr-6
+          lg:pl-[calc(260px+2rem)] lg:pr-8
+        "
+      >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <BrushIcon className="w-6 h-6 text-gold" />
-          <span className="font-serif text-xl lg:text-2xl font-semibold text-brown-900">
-            ArtWise
+        <Link
+          href="/"
+          className="flex items-center gap-2 group transition-opacity hover:opacity-90"
+          aria-label="SortArt home"
+        >
+          <BrushIcon className="w-6 h-6 shrink-0 text-gold group-hover:text-brown-700 transition-colors" />
+          <span className="font-serif text-xl lg:text-2xl tracking-tight leading-none">
+            <span className="font-semibold text-brown-900">Sort</span>
+            <span className="font-bold text-gold">Art</span>
           </span>
         </Link>
 
@@ -77,13 +89,13 @@ export default function Header({ onMenuClick }: HeaderProps) {
 
 function BrushIcon({ className }: { className?: string }) {
   return (
-    <svg 
-      className={className} 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <path d="M9.06 11.9l8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />

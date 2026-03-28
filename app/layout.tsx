@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Crimson_Pro } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ConvexClientProvider } from '@/components/ConvexClientProvider'
 import './globals.css'
 
 const playfairDisplay = Playfair_Display({ 
@@ -54,8 +55,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfairDisplay.variable} ${crimsonPro.variable} font-sans antialiased`}>
-        {children}
-        <Analytics />
+        <ConvexClientProvider>
+          {children}
+          <Analytics />
+        </ConvexClientProvider>
       </body>
     </html>
   )

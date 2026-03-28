@@ -59,21 +59,18 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div className="flex flex-col h-full pt-20 md:pt-20 px-4 lg:px-5">
           {/* Profile Section */}
           <div className="flex flex-col items-center text-center mb-8">
-            {/* Avatar with gold gradient */}
-            <div 
-              className="w-20 h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center mb-3"
-              style={{
-                background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%)',
-              }}
-            >
-              <span className="text-2xl lg:text-3xl font-serif font-semibold text-white">
-                AR
-              </span>
+            <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden mb-3 ring-2 ring-gold/50 shadow-md bg-brown-100">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/image.png"
+                alt="Hammad Riyaz"
+                className="w-full h-full object-cover"
+              />
             </div>
             <h2 className="font-serif text-lg lg:text-xl font-semibold text-brown-900">
-              Aria Patel
+              Hammad Riyaz
             </h2>
-            <p className="text-sm text-muted">@aria.paints</p>
+            <p className="text-sm text-muted">@hammad.riyaz</p>
             <p className="text-sm text-brown-500 mt-2 leading-relaxed">
               Capturing light one brushstroke at a time
             </p>
