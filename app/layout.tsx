@@ -3,15 +3,16 @@ import { Playfair_Display, Crimson_Pro } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ArtistProfileProvider } from '@/components/ArtistProfileProvider'
 import { ConvexClientProvider } from '@/components/ConvexClientProvider'
+import SiteFooter from '@/components/SiteFooter'
 import './globals.css'
 
-const playfairDisplay = Playfair_Display({ 
+const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
 })
 
-const crimsonPro = Crimson_Pro({ 
+const crimsonPro = Crimson_Pro({
   subsets: ['latin'],
   variable: '--font-crimson',
   display: 'swap',
@@ -19,7 +20,8 @@ const crimsonPro = Crimson_Pro({
 
 export const metadata: Metadata = {
   title: 'SortArt — Your Canvas Guided by AI',
-  description: 'A premium AI companion for artists. Get color analysis, mixing guides, and expert coaching for your artwork.',
+  description:
+    'A premium AI companion for artists. Get color analysis, mixing guides, and expert coaching for your artwork.',
   icons: {
     icon: '/image%20copy.png',
     apple: '/image%20copy.png',
@@ -41,10 +43,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${playfairDisplay.variable} ${crimsonPro.variable} font-sans antialiased`}>
+      <body
+        className={`${playfairDisplay.variable} ${crimsonPro.variable} font-sans antialiased`}
+      >
         <ArtistProfileProvider>
           <ConvexClientProvider>
-            {children}
+            <div className="flex min-h-dvh flex-col">
+              <div className="flex flex-1 flex-col">{children}</div>
+              <SiteFooter />
+            </div>
             <Analytics />
           </ConvexClientProvider>
         </ArtistProfileProvider>

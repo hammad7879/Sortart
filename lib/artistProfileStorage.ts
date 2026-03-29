@@ -9,8 +9,8 @@ export type ArtistProfileState = {
 export const ARTIST_PROFILE_STORAGE_KEY = 'sortart-artist-profile'
 
 export const DEFAULT_ARTIST_PROFILE: ArtistProfileState = {
-  displayName: 'Hammad Riyaz',
-  username: 'hammad.riyaz',
+  displayName: 'Baseer Ur Rehman',
+  username: 'baseerurrehman',
   profileImageDataUrl: null,
 }
 

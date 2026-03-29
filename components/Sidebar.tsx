@@ -40,8 +40,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       {/* Mobile overlay */}
       {isOpen && (
-        <div 
-          className="overlay md:hidden" 
+        <div
+          className="overlay md:hidden"
           onClick={onClose}
           aria-hidden="true"
         />
@@ -109,8 +109,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                       className={`
                         flex items-center gap-3 px-4 py-3 rounded-lg
                         transition-all duration-200 min-h-[48px]
-                        ${isActive 
-                          ? 'bg-brown-100 text-brown-900' 
+                        ${isActive
+                          ? 'bg-brown-100 text-brown-900'
                           : 'text-brown-700 hover:bg-brown-100/50'
                         }
                       `}
@@ -133,6 +133,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               {projects.map((project, index) => (
                 <li key={index}>
                   <button
+                    type="button"
                     className="w-full text-left px-3 py-2 rounded-lg hover:bg-brown-100/50 transition-colors duration-200"
                   >
                     <p className="text-sm font-medium text-brown-900 truncate">
@@ -152,13 +153,13 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
 function HomeIcon({ className }: { className?: string }) {
   return (
-    <svg 
-      className={className} 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -169,13 +170,13 @@ function HomeIcon({ className }: { className?: string }) {
 
 function GalleryIcon({ className }: { className?: string }) {
   return (
-    <svg 
-      className={className} 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />

@@ -1,0 +1,27 @@
+Copyright (c) 2026 Baseer Ur Rehman, Hamad Riyaz
+
+All rights reserved.
+
+This project (including its source code, design, text, and assets where
+applicable) is provided for use as configured by the authors. Unauthorized
+copying, modification, or distribution beyond the terms you agree to with
+the authors may be prohibited.
+
+Attribution
+-----------
+Web footer: "Made by Baseer Ur Rehman and Hamad Riyaz"
+
+Custom domain (how to connect your own URL)
+-------------------------------------------
+1. Deploy the app (for example Vercel, Netlify, or your own host with Node).
+
+2. Vercel (common for Next.js):
+   - Import this repository and deploy the Sortart app (root directory: Sortart
+     if your repo contains multiple folders).
+   - Open the project → Settings → Domains → add your domain (e.g. www.example.com).
+   - At your domain registrar, add the DNS records Vercel shows (usually A or
+     CNAME). Wait for DNS to propagate, then SSL is issued automatically.
+
+3. Optional: show your brand in the footer copyright line by creating
+   `.env.local` in the Sortart folder with:
+   NEXT_PUBLIC_SITE_NAME=Your Site Name
